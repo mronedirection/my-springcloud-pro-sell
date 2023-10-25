@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: config
+  cloud:
+    config:
+      server:
+        git:
+#          uri: https://github.com/mronedirection/config-repo
+#          username: 1418453829@qq.com
+#          password: 1418453829@qq.com
+#          default-label: main
+#          basedir: F:\code\IdeaProjects\SpringCloud\config\basedir
+#          skip-ssl-validation: true
+          #远端配置文件存放的地址
+          uri: https://gitee.com/renhao9683/config-repo
+          #git用户名和密码
+          username: 1418453829@qq.com
+          password: 1418453829@qq.com
+          #指定分支
+          default-label: master
+          #本地缓存的配置文件存放位置
+          basedir: F:\code\IdeaProjects\SpringCloud\config\basedir
+#    rabbitmq:
+#      host: 127.0.0.1
+#      port: 5672
+#      username: guest
+#      password: guest
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+#actuator  启用所有的监控端点 “*”号代表启用所有的监控端点，可以单独启用，例如，health，info，metrics
+#  spring boot 升为 2.0 后，为了安全，默认 Actuator 只暴露了2个端点，heath 和 info
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+

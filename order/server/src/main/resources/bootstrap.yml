@@ -1,0 +1,72 @@
+spring:
+  application:
+    name: order
+  cloud:
+    config:
+      discovery:
+        # 表示使用服务发现组件中的Config Server,而不自己指定Config Server的uri,默认为false
+        enabled: true
+        # 指定Config Server在服务发现中的service Id ,默认为configserver
+        service-id: CONFIG
+      profile: test
+      # 可配置多个uri,但是不推荐使用,因为需要设置具体的ip.服务端修改或者新增IP后,要同步修改
+      # uri: http://localhost:9898/,http://localhost:9999/
+    stream:
+      bindings:
+        myMessage:
+          group: order
+          content-type: application/json
+  #zipkin设置
+  zipkin:
+    base-url: http://localhost:9411/ #服务端地址
+  sleuth:
+    sampler:
+      percentage: 1 #抽样率，将所有的请求都发送出去
+      probability: 1 #设置可以将请求发送出去
+#熔断超时配置
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            #请求的最长访问时间，超时后触发降级
+            timeoutInMilliseconds: 1000
+    #为getProductInfoList()方法单独设置超时时间
+    getProductInfoList:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10
+  #配置代理地址
+  dashboard:
+    proxy-stream-allow-list: "localhost"
+#自定义管理端点路径
+management:
+  context-path: /
+  #暴露hystrix.stream端点
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream
+feign:
+  hystrix:
+    enabled: true
+  client:
+    config:
+      default:
+        connect-timeout: 5000
+        read-timeout: 5000
+        logger-level: basic
+#设置日志级别
+logging:
+  level:
+    org.springframework.cloud.openfeign: debug
+#对外暴露所有接口
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: "*"
+
+

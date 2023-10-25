@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: apigateway
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: CONFIG
+      profile: dev
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+#zuul:
+#  routes:
+#    # 自定义路由规则
+#    # /myProduct/product/list -> /product/product/list
+#    myProduct:
+#      path: /myProduct/**
+#      service-id: product
+#      #设置可以传递cookie
+#      sensitive-headers:
+#  #排除某些路由
+#  ignored-patterns:
+#    - /**/product/listForOrder
+#  #简洁写法
+#    product: /myProduct/**
+#management:
+#  security:
+#    enabled: false
+
